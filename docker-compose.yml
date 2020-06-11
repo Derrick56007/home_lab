@@ -14,25 +14,25 @@ services:
       - 8001:8000
       - 7227:7227 #optional
     restart: unless-stopped
-  pihole:
-    container_name: pihole
-    image: pihole/pihole:latest
-    environment:
-      - TZ=America/Los_Angeles
-      - WEBPASSWORD=1qaz
-      - ServerIP=192.168.1.119
-    volumes:
-      - /mnt/B_DRIVE/configs/pihole:/etc/pihole/
-      - /mnt/B_DRIVE/configs/dnsmasq.d/:/etc/dnsmasq.d/
-    dns:
-      - 127.0.0.1
-      - 1.1.1.1
-    # Recommended but not required (DHCP needs NET_ADMIN)
-    #   https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
-    cap_add:
-      - NET_ADMIN
-    restart: always
-    network_mode: host
+  # pihole:
+  #   container_name: pihole
+  #   image: pihole/pihole:latest
+  #   environment:
+  #     - TZ=America/Los_Angeles
+  #     - WEBPASSWORD=1qaz
+  #     - ServerIP=192.168.1.119
+  #   volumes:
+  #     - /mnt/B_DRIVE/configs/pihole:/etc/pihole/
+  #     - /mnt/B_DRIVE/configs/dnsmasq.d/:/etc/dnsmasq.d/
+  #   dns:
+  #     - 127.0.0.1
+  #     - 1.1.1.1
+  #   # Recommended but not required (DHCP needs NET_ADMIN)
+  #   #   https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
+  #   cap_add:
+  #     - NET_ADMIN
+  #   restart: always
+  #   network_mode: host
   heimdall:
     image: linuxserver/heimdall
     container_name: heimdall
