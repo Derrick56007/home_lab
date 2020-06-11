@@ -26,6 +26,7 @@ services:
     environment:
       - TZ=America/Los_Angeles
       - WEBPASSWORD=1qaz
+      - WEB_PORT=8086
     volumes:
       - /mnt/B_DRIVE/configs/pihole:/etc/pihole/
       - /mnt/B_DRIVE/configs/dnsmasq.d/:/etc/dnsmasq.d/
