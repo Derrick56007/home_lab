@@ -1,5 +1,19 @@
 version: "2.1"
 services:
+  homer:
+    image: nx211/docker-homer
+    container_name: homer
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Los_Angeles
+    volumes:
+      - /mnt/B_DRIVE/configs/homer:/config # optional for access to nginx config
+      - /mnt/B_DRIVE/configs/homer/config.yml:/homer/config.yml
+    ports:
+      - 80:80
+      - 443:443
+    restart: always
   komga:
     image: gotson/komga
     container_name: komga
