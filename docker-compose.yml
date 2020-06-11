@@ -45,8 +45,7 @@ services:
       - PGID=1000
       - TZ=America/Los_Angeles
     volumes:
-      - /mnt/B_DRIVE/configs/homer:/config # optional for access to nginx config
-      - /mnt/B_DRIVE/configs/homer/config.yml:/homer/config.yml
+      - /mnt/B_DRIVE/configs/homer:/config
     ports:
       - 80:80
       - 444:443
