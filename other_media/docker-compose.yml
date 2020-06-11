@@ -1,6 +1,6 @@
 version: "2.1"
 services:
-  pydio:
+  droppy:
     image: silverwind/armhf-droppy
     container_name: droppy
     environment:
