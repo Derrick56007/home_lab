@@ -1,21 +1,18 @@
 version: "2.1"
 services:
-  pydio-cells:
-    image: linuxserver/pydio-cells
-    container_name: pydio-cells
-    hostname: pydio-cells
+  pydio:
+    image: linuxserver/pydio
+    container_name: pydio
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=Europe/London
-      - EXTERNALURL=yourdomain.url
-#      - SERVER_IP=0.0.0.0 #optional
+      - TZ=America/Los_Angeles
     volumes:
-      - /mnt/B_DRIVE/configs/pydio-cells:/config
-      - /mnt/B_DRIVE:/data
+      - /mnt/B_DRIVE/configs/pydio:/config
+      - /mnt/B_DRIVE/:/data
     ports:
-      - 8080:8080
- #     - 33060:33060 #optional
+      - 8080:80
+      - 444:443
     restart: unless-stopped
   # pihole:
   #   container_name: pihole
