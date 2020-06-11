@@ -13,21 +13,7 @@ services:
     ports:
       - 8001:8000
       - 7227:7227 #optional
-    restart: unless-stopped    
-  portainer:
-    image: portainer/portainer
-    container_name: portainer
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=America/Los_Angeles
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /mnt/B_DRIVE/configs/portainer:/data
-    ports:
-      - 8000:8000
-      - 9000:9000
-    restart: always    
+    restart: unless-stopped
   pihole:
     container_name: pihole
     image: pihole/pihole:latest
