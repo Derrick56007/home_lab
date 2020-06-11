@@ -1,0 +1,28 @@
+version: "2.1"
+services:
+  plex:
+    image: linuxserver/plex:latest
+    container_name: plex
+    network_mode: host
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - VERSION=docker
+      - UMASK_SET=022 #optional
+#      - PLEX_CLAIM= #optional
+    volumes:
+      - /mnt/B_DRIVE/configs/plex:/config
+      - /mnt/B_DRIVE/media/transcode:/transcode
+      - /mnt/B_DRIVE/media:/media
+    ports:
+      - 32400:32400
+      - 1900:1900/udp
+      - 3005:3005
+      - 5353:5353/udp
+      - 8324:8324
+      - 32410:32410/udp
+      - 32412:32412/udp
+      - 32413:32413/udp
+      - 32414:32414/udp
+      - 32469:32469
+    restart: unless-stopped
