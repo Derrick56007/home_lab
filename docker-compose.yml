@@ -26,6 +26,7 @@ services:
     environment:
       - TZ=America/Los_Angeles
       - WEBPASSWORD=1qaz
+      - ServerIP=192.168.1.119
     volumes:
       - /mnt/B_DRIVE/configs/pihole:/etc/pihole/
       - /mnt/B_DRIVE/configs/dnsmasq.d/:/etc/dnsmasq.d/
