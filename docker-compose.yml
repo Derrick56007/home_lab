@@ -1,11 +1,12 @@
-version: "2"
+version: "3"
 services:
-  taisun:
-    image: linuxserver/taisun
-    container_name: taisun
-    network_mode: bridge
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+  nginx-proxy-manager:
+    image: jlesage/nginx-proxy-manager
     ports:
-      - 3000:3000
+      - "8181:8181"
+      - "8080:8080"
+      - "4443:4443"
+    volumes:
+      - "/docker/appdata/nginx-proxy-manager:/config:rw"
     restart: unless-stopped
+    
