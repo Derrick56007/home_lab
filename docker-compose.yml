@@ -1,18 +1,17 @@
 version: "2.1"
 services:
-  pyload:
-    image: linuxserver/pyload
-    container_name: pyload
+  pydio:
+    image: linuxserver/pydio
+    container_name: pydio
     environment:
       - PUID=1000
       - PGID=1000
       - TZ=America/Los_Angeles
     volumes:
-      - /mnt/B_DRIVE/configs/pyload:/config
-      - /mnt/B_DRIVE/downloads/pyload:/downloads
+      - /mnt/B_DRIVE/configs/pydio:/config
+      - /mnt/B_DRIVE/:/data
     ports:
-      - 8001:8000
-      - 7227:7227 #optional
+      - 443:443
     restart: unless-stopped
   # pihole:
   #   container_name: pihole
@@ -45,7 +44,7 @@ services:
     ports:
       - 8085:80
       - 444:443
-    restart: always
+    restart: unless-stopped
   komga:
     image: gotson/komga
     container_name: komga
@@ -58,7 +57,7 @@ services:
       - /mnt/B_DRIVE/media/gs:/books
     ports:
       - 8069:8080
-    restart: always
+    restart: unless-stopped
   calibre-web:
     image: linuxserver/calibre-web:latest
     container_name: calibre-web
@@ -72,7 +71,7 @@ services:
       - /mnt/B_DRIVE/media/books:/books
     ports:
       - 8084:8083
-    restart: always
+    restart: unless-stopped
   plex:
     image: linuxserver/plex:latest
     container_name: plex
@@ -98,4 +97,4 @@ services:
       - 32413:32413/udp
       - 32414:32414/udp
       - 32469:32469
-    restart: always
+    restart: unless-stopped
