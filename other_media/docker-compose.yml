@@ -1,17 +1,20 @@
 version: "2.1"
 services:
-  pydio:
-    image: linuxserver/pydio
-    container_name: pydio
+  pydio-cells:
+    image: linuxserver/pydio-cells
+    container_name: pydio-cells
+    hostname: pydio-cells
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=America/Los_Angeles
+      - TZ=Europe/London
+      - EXTERNALURL=yourdomain.url
+#      - SERVER_IP=0.0.0.0 #optional
     volumes:
-      - /mnt/B_DRIVE/configs/pydio:/config
-      - /mnt/B_DRIVE/:/data
+      - /path/to/appdata/config:/config
     ports:
-      - 443:443
+      - 8080:8080
+ #     - 33060:33060 #optional
     restart: unless-stopped
   # pihole:
   #   container_name: pihole
@@ -42,8 +45,8 @@ services:
     volumes:
       - /mnt/B_DRIVE/configs/heimdall:/config
     ports:
-      - 8085:80
-      - 444:443
+      - 80:80
+      - 443:443
     restart: unless-stopped
   komga:
     image: gotson/komga
