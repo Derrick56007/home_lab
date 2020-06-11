@@ -1,5 +1,29 @@
 version: "2.1"
 services:
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:latest
+    ports:
+      - 53:53/tcp
+      - 53:53/udp
+      - 67:67/udp
+      - 8085:80/tcp
+      - 443:443/tcp
+    environment:
+        - TZ=America/Los_Angeles
+        - WEBPASSWORD=1qaz
+        # Volumes store your data between container upgrades
+    volumes:
+        - /mnt/B_DRIVE/configs/pihole:/etc/pihole/
+        - /mnt/B_DRIVE/configs/dnsmasq.d/:/etc/dnsmasq.d/
+    dns:
+        - 127.0.0.1
+        - 1.1.1.1
+    # Recommended but not required (DHCP needs NET_ADMIN)
+    #   https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
+    cap_add:
+        - NET_ADMIN
+    restart: always
   homer:
     image: nx211/docker-homer
     container_name: homer
@@ -12,7 +36,7 @@ services:
       - /mnt/B_DRIVE/configs/homer/config.yml:/homer/config.yml
     ports:
       - 80:80
-      - 443:443
+      - 444:443
     restart: always
   komga:
     image: gotson/komga
