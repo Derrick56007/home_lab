@@ -1,18 +1,14 @@
 version: "2.1"
 services:
   pydio:
-    image: linuxserver/pydio
-    container_name: pydio
+    image: silverwind/armhf-droppy
+    container_name: droppy
     environment:
       - PUID=1000
       - PGID=1000
       - TZ=America/Los_Angeles
-    volumes:
-      - /mnt/B_DRIVE/configs/pydio:/config
-      - /mnt/B_DRIVE/:/data
     ports:
-      - 8080:80
-      - 444:443
+      - 8989:8989
     restart: unless-stopped
   # pihole:
   #   container_name: pihole
