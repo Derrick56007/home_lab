@@ -37,15 +37,15 @@ services:
     cap_add:
       - NET_ADMIN
     restart: always
-  homer:
-    image: nx211/docker-homer
-    container_name: homer
+  heimdall:
+    image: linuxserver/heimdall
+    container_name: heimdall
     environment:
       - PUID=1000
       - PGID=1000
       - TZ=America/Los_Angeles
     volumes:
-      - /mnt/B_DRIVE/configs/homer:/config
+      - /mnt/B_DRIVE/configs/heimdall:/config
     ports:
       - 80:80
       - 444:443
