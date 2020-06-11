@@ -1,5 +1,19 @@
 version: "2.1"
 services:
+  portainer:
+    image: portainer/portainer
+    container_name: portainer
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Los_Angeles
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /mnt/B_DRIVE/configs/portainer:/data
+    ports:
+      - 8000:8000
+      - 9000:9000
+    restart: always    
   pihole:
     container_name: pihole
     image: pihole/pihole:latest
@@ -10,19 +24,18 @@ services:
       - 8085:80/tcp
       - 443:443/tcp
     environment:
-        - TZ=America/Los_Angeles
-        - WEBPASSWORD=1qaz
-        # Volumes store your data between container upgrades
+      - TZ=America/Los_Angeles
+      - WEBPASSWORD=1qaz
     volumes:
-        - /mnt/B_DRIVE/configs/pihole:/etc/pihole/
-        - /mnt/B_DRIVE/configs/dnsmasq.d/:/etc/dnsmasq.d/
+      - /mnt/B_DRIVE/configs/pihole:/etc/pihole/
+      - /mnt/B_DRIVE/configs/dnsmasq.d/:/etc/dnsmasq.d/
     dns:
-        - 127.0.0.1
-        - 1.1.1.1
+      - 127.0.0.1
+      - 1.1.1.1
     # Recommended but not required (DHCP needs NET_ADMIN)
     #   https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
     cap_add:
-        - NET_ADMIN
+      - NET_ADMIN
     restart: always
   homer:
     image: nx211/docker-homer
