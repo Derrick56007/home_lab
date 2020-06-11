@@ -11,6 +11,6 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - /mnt/B_DRIVE/configs/portainer:/data
     ports:
-      - 8000:8000
+      - 8001:8000
       - 9000:9000
     restart: unless-stopped
