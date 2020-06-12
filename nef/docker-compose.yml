@@ -8,8 +8,8 @@ services:
     - com.centurylinklabs.watchtower.enable=true
     image: lardbit/nefarious:armv7
     restart: always
-    # ports:
-    # - "8000:80"
+    ports:
+    - "8000:80"
     environment:
       # https://github.com/kennethreitz/dj-database-url
       DATABASE_URL: "sqlite:////nefarious-db/db.sqlite3"
@@ -20,12 +20,10 @@ services:
     logging:
       options:
         max-size: 10m
-    network_mode: "service:gluetun"      
     depends_on:
     - redis
     - jackett
     - celery
-    - gluetun
 
   # background task queue
   celery:
@@ -45,21 +43,17 @@ services:
     logging:
       options:
         max-size: 10m
-    network_mode: "service:gluetun"
     depends_on:
       - redis
-      - gluetun
 
   # in-memory database for task queue
   redis:
     image: arm32v7/redis
     restart: always
     # TODO - use "expose" vs "ports" to limit external access when not in development
-    # ports:
-    # - "6379:6379"
-    network_mode: "service:gluetun"
-    depends_on:
-      - gluetun
+    ports:
+    - "6379:6379"
+
   # torrent indexer service
   jackett:
     labels:
@@ -67,16 +61,13 @@ services:
     image: linuxserver/jackett:arm32v7-latest
     mem_limit: 200m
     restart: always
-    # ports:
-    #   - "9117:9117"
+    ports:
+      - "9117:9117"
     logging:
       options:
         max-size: 10m
     volumes:
       - jackett-config:/config
-    network_mode: "service:gluetun"
-    depends_on:
-      - gluetun
 
   transmission:
     image: linuxserver/transmission:arm32v7-latest
@@ -169,9 +160,7 @@ services:
         max-size: 10m
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-    network_mode: "service:gluetun"
-    depends_on:
-      - gluetun
+
 volumes:
   nefarious-db:
     driver: local
