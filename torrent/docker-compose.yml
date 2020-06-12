@@ -1,15 +1,15 @@
 version: "2.1"
 services:
-    qbittorrent:
-      image: j4ym0/pia-qbittorrent
-      container_name: qbittorrent
-    volumes:
-      - /mnt/B_DRIVE/configs/qbittorrent:/config
-      - /mnt/B_DRIVE/downloads:/downloads      
-    environment:
-      - REGION=US California
-      - USER=p7143356
-      - PASSWORD=9Pyp6M2fXy
+  qbittorrent:
+    image: j4ym0/pia-qbittorrent
+    container_name: qbittorrent
+  volumes:
+    - /mnt/B_DRIVE/configs/qbittorrent:/config
+    - /mnt/B_DRIVE/downloads:/downloads      
+  environment:
+    - REGION=US California
+    - USER=p7143356
+    - PASSWORD=9Pyp6M2fXy
 #   qbittorrent:
 #     image: linuxserver/qbittorrent
 #     container_name: qbittorrent
