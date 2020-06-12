@@ -31,7 +31,7 @@ services:
     links:
       - db:db
     ports:
-      - "80:80"
+      - "88:80"
     volumes:
       - /filerun/html:/var/www/html
       - /filerun/user-files:/user-files
