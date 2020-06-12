@@ -2,6 +2,7 @@ version: '2'
 
 services:
   db:
+    container_name: mariadb
     image: jsurf/rpi-mariadb
     environment:
       MYSQL_ROOT_PASSWORD: your_mysql_root_password
@@ -10,11 +11,12 @@ services:
       MYSQL_DATABASE: your_mysql_database
       PUID: 1000
       PGID: 1000
-      TZ: Europe/London
+      TZ: America/Los_Angeles
     volumes:
       - /filerun/db:/var/lib/mysql
 
   web:
+    container_name: filerun
     image: afian/filerun:arm32v7
     environment:
       FR_DB_HOST: db
