@@ -57,7 +57,9 @@ services:
     # TODO - use "expose" vs "ports" to limit external access when not in development
     # ports:
     # - "6379:6379"
-
+    network_mode: "service:gluetun"
+    depends_on:
+      - gluetun
   # torrent indexer service
   jackett:
     labels:
@@ -91,7 +93,7 @@ services:
     network_mode: "service:gluetun"
     depends_on:
       - gluetun
-      
+
   gluetun:
     image: qmcgaw/private-internet-access
     container_name: gluetun
@@ -167,7 +169,9 @@ services:
         max-size: 10m
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-
+    network_mode: "service:gluetun"
+    depends_on:
+      - gluetun
 volumes:
   nefarious-db:
     driver: local
