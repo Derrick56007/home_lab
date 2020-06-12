@@ -70,7 +70,7 @@ services:
       - jackett-config:/config
 
   transmission:
-    image: linuxserver/transmission
+    image: linuxserver/transmission:latest
     volumes:
       # NOTE: the settings in this included file allow any IP to connect
       - type: bind
@@ -96,7 +96,7 @@ services:
       - 8388:8388/tcp # Shadowsocks
       - 8388:8388/udp # Shadowsocks
       - 8000:8000/tcp # Built-in HTTP control server
-      - 8080:8080
+      - "9091:9091"
 
     # command:
     environment:
