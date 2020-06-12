@@ -20,7 +20,7 @@ services:
                 max-size: 10m
         ports:
             - '9091:9091'
-        image: haugene/transmission-openvpn
+        image: haugene/transmission-openvpn:latest-armhf 
 #   qbittorrent:
 #     image: linuxserver/qbittorrent
 #     container_name: qbittorrent
