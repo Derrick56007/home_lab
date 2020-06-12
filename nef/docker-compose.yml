@@ -70,7 +70,7 @@ services:
       - jackett-config:/config
 
   transmission:
-    image: linuxserver/transmission:arm32v7-latest
+    image: linuxserver/transmission
     volumes:
       # NOTE: the settings in this included file allow any IP to connect
       - type: bind
