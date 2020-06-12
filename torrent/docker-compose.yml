@@ -7,7 +7,7 @@ services:
         environment:
             - CREATE_TUN_DEVICE=true
             - OPENVPN_PROVIDER=PIA
-            - OPENVPN_CONFIG=US California
+            - OPENVPN_CONFIG=CA Vancouver
             - OPENVPN_USERNAME=p7143356
             - OPENVPN_PASSWORD=9Pyp6M2fXy
             - WEBPROXY_ENABLED=false
