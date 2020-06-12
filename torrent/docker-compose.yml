@@ -11,7 +11,7 @@ services:
             - OPENVPN_USERNAME=p7143356
             - OPENVPN_PASSWORD=9Pyp6M2fXy
             - WEBPROXY_ENABLED=false
-            - LOCAL_NETWORK=192.168.1.119
+            - LOCAL_NETWORK=192.168.1.0/24
         cap_add:
             - NET_ADMIN
         logging:
