@@ -70,7 +70,7 @@ services:
       - /mnt/B_DRIVE/configs/jackett:/config
 
   transmission:
-    image: linuxserver/transmission:latest
+    image: linuxserver/transmission:arm32v7-latest
     volumes:
       # NOTE: the settings in this included file allow any IP to connect
       - type: bind
