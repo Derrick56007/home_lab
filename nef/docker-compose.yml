@@ -20,10 +20,12 @@ services:
     logging:
       options:
         max-size: 10m
+    network_mode: "service:gluetun"      
     depends_on:
     - redis
     - jackett
     - celery
+    - gluetun
 
   # background task queue
   celery:
@@ -43,8 +45,10 @@ services:
     logging:
       options:
         max-size: 10m
+    network_mode: "service:gluetun"
     depends_on:
       - redis
+      - gluetun
 
   # in-memory database for task queue
   redis:
@@ -68,6 +72,9 @@ services:
         max-size: 10m
     volumes:
       - jackett-config:/config
+    network_mode: "service:gluetun"
+    depends_on:
+      - gluetun
 
   transmission:
     image: linuxserver/transmission:arm32v7-latest
@@ -81,6 +88,10 @@ services:
       - /tmp/transmission:/downloads
     # ports:
     #   - "9091:9091"
+    network_mode: "service:gluetun"
+    depends_on:
+      - gluetun
+      
   gluetun:
     image: qmcgaw/private-internet-access
     container_name: gluetun
