@@ -13,7 +13,7 @@ services:
       PGID: 1000
       TZ: America/Los_Angeles
     volumes:
-      - /filerun/db:/var/lib/mysql
+      - /mnt/B_DRIVE/databases/filerun:/var/lib/mysql
 
   web:
     container_name: filerun
@@ -35,5 +35,5 @@ services:
     ports:
       - "88:80"
     volumes:
-      - /filerun/html:/var/www/html
-      - /filerun/user-files:/user-files
+      - /mnt/B_DRIVE/misc/filerun:/var/www/html
+      - /mnt/B_DRIVE:/user-files
