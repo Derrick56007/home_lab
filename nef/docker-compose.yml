@@ -67,7 +67,7 @@ services:
       options:
         max-size: 10m
     volumes:
-      - jackett-config:/config
+      - /mnt/B_DRIVE/configs/jackett:/config
 
   transmission:
     image: linuxserver/transmission:latest
@@ -78,7 +78,7 @@ services:
         target: /config/settings.json
         read_only: true
       # NOTE: update the first part of this path to point to where you want things downloaded to
-      - /tmp/transmission:/downloads
+      - /mnt/B_DRIVE/downloads:/downloads
     # ports:
     #   - "9091:9091"
     network_mode: "service:gluetun"
