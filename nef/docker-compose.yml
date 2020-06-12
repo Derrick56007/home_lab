@@ -4,6 +4,7 @@ services:
 
   # main application
   nefarious:
+    container_name: nefarious
     labels:
     - com.centurylinklabs.watchtower.enable=true
     image: lardbit/nefarious:armv7
@@ -27,6 +28,7 @@ services:
 
   # background task queue
   celery:
+    container_name: celery
     labels:
       - com.centurylinklabs.watchtower.enable=true
     image: lardbit/nefarious:armv7
@@ -48,6 +50,7 @@ services:
 
   # in-memory database for task queue
   redis:
+    container_name: redis
     image: arm32v7/redis
     restart: always
     # TODO - use "expose" vs "ports" to limit external access when not in development
@@ -56,6 +59,7 @@ services:
 
   # torrent indexer service
   jackett:
+    container_name: jackett
     labels:
       - com.centurylinklabs.watchtower.enable=true
     image: linuxserver/jackett:arm32v7-latest
@@ -72,6 +76,7 @@ services:
   # auto update service
   # https://github.com/v2tec/watchtower
   watchtower:
+    container_name: watchtower
     image: v2tec/watchtower:armhf-latest
     restart: always
     command: --label-enable --cleanup
@@ -80,7 +85,7 @@ services:
         max-size: 10m
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      
+
   transmission:
     image: linuxserver/transmission
     container_name: transmission
