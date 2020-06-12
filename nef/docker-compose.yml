@@ -80,7 +80,86 @@ services:
         max-size: 10m
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      
+  transmission:
+    image: linuxserver/transmission
+    container_name: transmission
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Los_Angeles
+      # - TRANSMISSION_WEB_HOME=/combustion-release/ #optional
+      # - USER=username #optional
+      # - PASS=password #optional
+    volumes:
+      - /mnt/B_DRIVE/configs/transmission:/config
+      - /mnt/B_DRIVE/downloads:/downloads
+      - /mnt/B_DRIVE/watch:/watch
+    network_mode: "service:gluetun"
+    depends_on:
+      - gluetun
+    restart: always
 
+  gluetun:
+    image: qmcgaw/private-internet-access
+    container_name: gluetun
+    cap_add:
+      - NET_ADMIN
+    network_mode: bridge
+    ports:
+      - 8888:8888/tcp # Tinyproxy
+      - 8388:8388/tcp # Shadowsocks
+      - 8388:8388/udp # Shadowsocks
+      # - 8000:8000/tcp # Built-in HTTP control server
+      - "9091:9091"
+
+    # command:
+    environment:
+      # More variables are available, see the readme table
+      - VPNSP=private internet access
+      - PROTOCOL=udp
+      - OPENVPN_VERBOSITY=1
+      - OPENVPN_ROOT=no
+      - OPENVPN_TARGET_IP=
+      - TZ=America/Los_Angeles
+
+      # PIA, Windscribe and Surfshark only
+      - REGION="US California"
+      - USER=p7143356
+      - PASSWORD=9Pyp6M2fXy
+
+      # PIA only
+      - PIA_ENCRYPTION=strong
+      - PORT_FORWARDING=off
+
+      # Mullvad only
+      # - COUNTRY=Sweden
+      # - CITY=
+      # - ISP=
+
+      # Mullvad and Windscribe only
+      # - PORT=
+
+      # DNS over TLS
+      - DOT=on
+      - DOT_PROVIDERS=cloudflare
+      - DOT_IPV6=off
+      - DOT_VERBOSITY=1
+      - BLOCK_MALICIOUS=on
+      - BLOCK_SURVEILLANCE=off
+      - BLOCK_ADS=off
+      # - UNBLOCK=
+      - DNS_UPDATE_PERIOD=24h
+      # Firewall
+      - EXTRA_SUBNETS=
+      # Shadowsocks
+      - SHADOWSOCKS=off
+      # - SHADOWSOCKS_PASSWORD=
+      # Tinyproxy
+      - TINYPROXY=off
+      # - TINYPROXY_USER=
+      # - TINYPROXY_PASSWORD=
+    restart: always
 volumes:
   nefarious-db:
     driver: local
