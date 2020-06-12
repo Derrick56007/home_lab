@@ -1,0 +1,165 @@
+version: '2.4'
+
+services:
+
+  # main application
+  nefarious:
+    labels:
+    - com.centurylinklabs.watchtower.enable=true
+    image: lardbit/nefarious:armv7
+    restart: always
+    # ports:
+    # - "8000:80"
+    environment:
+      # https://github.com/kennethreitz/dj-database-url
+      DATABASE_URL: "sqlite:////nefarious-db/db.sqlite3"
+      REDIS_HOST: "redis"
+    volumes:
+    # persistent named volume for sqlite database
+    - nefarious-db:/nefarious-db
+    logging:
+      options:
+        max-size: 10m
+    depends_on:
+    - redis
+    - jackett
+    - celery
+
+  # background task queue
+  celery:
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
+    image: lardbit/nefarious:armv7
+    restart: always
+    # the number of celery workers defaults to "0" which means it'll match the number of available CPUs
+    entrypoint: /env/bin/celery -A nefarious worker --concurrency ${NUM_CELERY_WORKERS:-0} --beat --loglevel=INFO
+    environment:
+      # https://github.com/kennethreitz/dj-database-url
+      DATABASE_URL: "sqlite:////nefarious-db/db.sqlite3"
+      REDIS_HOST: "redis"
+    volumes:
+    # persistent named volume for sqlite database
+    - nefarious-db:/nefarious-db
+    logging:
+      options:
+        max-size: 10m
+    depends_on:
+      - redis
+
+  # in-memory database for task queue
+  redis:
+    image: arm32v7/redis
+    restart: always
+    # TODO - use "expose" vs "ports" to limit external access when not in development
+    # ports:
+    # - "6379:6379"
+
+  # torrent indexer service
+  jackett:
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
+    image: linuxserver/jackett:arm32v7-latest
+    mem_limit: 200m
+    restart: always
+    # ports:
+    #   - "9117:9117"
+    logging:
+      options:
+        max-size: 10m
+    volumes:
+      - jackett-config:/config
+
+  transmission:
+    image: linuxserver/transmission:arm32v7-latest
+    volumes:
+      # NOTE: the settings in this included file allow any IP to connect
+      - type: bind
+        source: ./transmission-settings.json
+        target: /config/settings.json
+        read_only: true
+      # NOTE: update the first part of this path to point to where you want things downloaded to
+      - /tmp/transmission:/downloads
+    # ports:
+    #   - "9091:9091"
+  gluetun:
+    image: qmcgaw/private-internet-access
+    container_name: gluetun
+    cap_add:
+      - NET_ADMIN
+    network_mode: bridge
+    ports:
+      - 8888:8888/tcp # Tinyproxy
+      - 8388:8388/tcp # Shadowsocks
+      - 8388:8388/udp # Shadowsocks
+      - 8000:8000/tcp # Built-in HTTP control server
+      - 8080:8080
+      - "6379:6379"
+      - "9117:9117"
+      - "9091:9091"
+
+    # command:
+    environment:
+      # More variables are available, see the readme table
+      - VPNSP=private internet access
+      - PROTOCOL=udp
+      - OPENVPN_VERBOSITY=1
+      - OPENVPN_ROOT=no
+      - OPENVPN_TARGET_IP=
+      - TZ=America/Los_Angeles
+
+      # PIA, Windscribe and Surfshark only
+      - REGION="US California"
+      - USER=p7143356
+      - PASSWORD=9Pyp6M2fXy
+
+      # PIA only
+      - PIA_ENCRYPTION=strong
+      - PORT_FORWARDING=off
+
+      # Mullvad only
+      # - COUNTRY=Sweden
+      # - CITY=
+      # - ISP=
+
+      # Mullvad and Windscribe only
+      # - PORT=
+
+      # DNS over TLS
+      - DOT=on
+      - DOT_PROVIDERS=cloudflare
+      - DOT_IPV6=off
+      - DOT_VERBOSITY=1
+      - BLOCK_MALICIOUS=on
+      - BLOCK_SURVEILLANCE=off
+      - BLOCK_ADS=off
+      # - UNBLOCK=
+      - DNS_UPDATE_PERIOD=24h
+      # Firewall
+      - EXTRA_SUBNETS=
+      # Shadowsocks
+      - SHADOWSOCKS=off
+      # - SHADOWSOCKS_PASSWORD=
+      # Tinyproxy
+      - TINYPROXY=off
+      # - TINYPROXY_USER=
+      # - TINYPROXY_PASSWORD=
+     restart: always
+
+  # auto update service
+  # https://github.com/v2tec/watchtower
+  watchtower:
+    image: v2tec/watchtower:armhf-latest
+    restart: always
+    command: --label-enable --cleanup
+    logging:
+      options:
+        max-size: 10m
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+volumes:
+  nefarious-db:
+    driver: local
+  jackett-config:
+    driver: local
+
