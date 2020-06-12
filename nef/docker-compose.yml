@@ -97,9 +97,6 @@ services:
       - 8388:8388/udp # Shadowsocks
       - 8000:8000/tcp # Built-in HTTP control server
       - 8080:8080
-      - "6379:6379"
-      - "9117:9117"
-      - "9091:9091"
 
     # command:
     environment:
