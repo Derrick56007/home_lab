@@ -1,15 +1,26 @@
-version: "2.1"
+version: '3.3'
 services:
-  qbittorrent:
-    image: j4ym0/pia-qbittorrent
-    container_name: qbittorrent
-    volumes:
-      - /mnt/B_DRIVE/configs/qbittorrent:/config
-      - /mnt/B_DRIVE/downloads:/downloads      
-    environment:
-      - REGION=US California
-      - USER=p7143356
-      - PASSWORD=9Pyp6M2fXy
+    transmission-openvpn:
+        volumes:
+            - /mnt/B_DRIVE/configs/transmission-openvpn:/config
+            - /mnt/B_DRIVE/downloads:/downloads
+        environment:
+            - CREATE_TUN_DEVICE=true
+            - OPENVPN_PROVIDER=PIA
+            - OPENVPN_CONFIG=US California
+            - OPENVPN_USERNAME=p7143356
+            - OPENVPN_PASSWORD=9Pyp6M2fXy
+            - WEBPROXY_ENABLED=false
+            - LOCAL_NETWORK=192.168.1.119
+        cap_add:
+            - NET_ADMIN
+        logging:
+            driver: json-file
+            options:
+                max-size: 10m
+        ports:
+            - '9091:9091'
+        image: haugene/transmission-openvpn
 #   qbittorrent:
 #     image: linuxserver/qbittorrent
 #     container_name: qbittorrent
