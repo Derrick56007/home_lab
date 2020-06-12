@@ -70,20 +70,23 @@ services:
       - /mnt/B_DRIVE/configs/jackett:/config
 
   transmission:
-    image: linuxserver/transmission:arm32v7-latest
+    image: linuxserver/transmission
+    container_name: transmission
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Los_Angeles
+      # - TRANSMISSION_WEB_HOME=/combustion-release/ #optional
+      # - USER=username #optional
+      # - PASS=password #optional
     volumes:
-      # NOTE: the settings in this included file allow any IP to connect
-      - type: bind
-        source: ./transmission-settings.json
-        target: /config/settings.json
-        read_only: true
-      # NOTE: update the first part of this path to point to where you want things downloaded to
+      - /mnt/B_DRIVE/configs/transmission:/config
       - /mnt/B_DRIVE/downloads:/downloads
-    # ports:
-    #   - "9091:9091"
+      - /mnt/B_DRIVE/watch:/watch
     network_mode: "service:gluetun"
     depends_on:
       - gluetun
+    restart: always
 
   gluetun:
     image: qmcgaw/private-internet-access
