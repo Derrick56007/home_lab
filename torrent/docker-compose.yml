@@ -29,7 +29,7 @@ services:
       - 8888:8888/tcp # Tinyproxy
       - 8388:8388/tcp # Shadowsocks
       - 8388:8388/udp # Shadowsocks
-      - 8001:8000/tcp # Built-in HTTP control server
+      - 8002:8000/tcp # Built-in HTTP control server
       - 9091:9091
 
     # command:
