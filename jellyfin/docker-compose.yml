@@ -1,0 +1,21 @@
+version: "2.1"
+services:
+  jellyfin:
+    image: ghcr.io/linuxserver/jellyfin
+    container_name: jellyfin
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Los_Angeles
+      - UMASK_SET=022 #optional
+    volumes:
+      - /mnt/B_DRIVE/configs/jellyfin:/config
+      - /mnt/B_DRIVE/media/movies:/data/movies
+      - /mnt/B_DRIVE/media/shows:/data/tvshows
+      - /mnt/B_DRIVE/media/music:/data/music
+    ports:
+      - 8096:8096
+      - 8920:8920 #optional
+      - 7359:7359/udp #optional
+      - 1900:1900/udp #optional
+    restart: unless-stopped

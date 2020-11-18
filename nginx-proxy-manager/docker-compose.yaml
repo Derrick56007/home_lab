@@ -1,0 +1,32 @@
+version: "3"
+services:
+  app:
+    image: jc21/nginx-proxy-manager:latest
+    restart: always
+    ports:
+      # Public HTTP Port:
+      - '80:80'
+      # Public HTTPS Port:
+      - '443:443'
+      # Admin Web Port:
+      - '81:81'
+    environment:
+      # Uncomment this if IPv6 is not enabled on your host
+      DISABLE_IPV6: 'true'
+    volumes:
+      # Make sure this config.json file exists as per instructions above:
+      - /mnt/B_DRIVE/configs/nginx/config.json:/app/config/production.json
+      - /mnt/B_DRIVE/configs/nginx/data:/data
+      - /mnt/B_DRIVE/configs/nginx/letsencrypt:/etc/letsencrypt
+    depends_on:
+      - db
+  db:
+    image: webhippie/mariadb:latest
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: 'npm'
+      MARIADB_DATABASE: 'npm'
+      MARIADB_USERNAME: 'npm'
+      MARIADB_PASSWORD: 'npm'
+    volumes:
+      - /mnt/B_DRIVE/configs/nginx/mysql:/var/lib/mysql
