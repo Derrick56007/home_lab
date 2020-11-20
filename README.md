@@ -12,11 +12,7 @@ Requirements
 
 Make sure to go into each docker-compose.yaml file to change the necessary directory (change B_DRIVE to your mounted drive)
 
-
 - Docker: https://docs.docker.com/get-docker/
-
-(optional)
-
 - Docker Compose: https://docs.docker.com/compose/install/
 
 Usage
