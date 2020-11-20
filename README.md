@@ -1,19 +1,20 @@
 # media_server
 
 - [plex](https://github.com/plexinc/pms-docker)
-- [bazarr](https://github.com/linuxserver/docker-bazarr)
-- [calibre](https://github.com/linuxserver/docker-calibre)
-- [calibre-web](https://github.com/linuxserver/docker-calibre-web)
-- [heimdall](https://github.com/linuxserver/docker-heimdall)
-- [qbittorrent](https://github.com/linuxserver/docker-qbittorrent)
-- [radarr](https://github.com/linuxserver/docker-radarr)
-- [sonarr](https://github.com/linuxserver/docker-sonarr)
-- [unifi-controller](https://github.com/linuxserver/docker-unifi-controller)
+- [deemix](https://gitlab.com/Bockiii/deemix-docker)
+- [filerun](https://hub.docker.com/r/afian/filerun/)
+- [jellyfin](https://hub.docker.com/r/linuxserver/jellyfin)
+- [nginx-proxy-manager](https://hub.docker.com/r/jc21/nginx-proxy-manager)
+- [portainer](https://hub.docker.com/r/portainer/portainer)
 
 Requirements
 ------------
 
 - Docker: https://docs.docker.com/get-docker/
+
+(optional)
+
+- Docker Compose: https://docs.docker.com/compose/install/
 
 Usage
 -----
@@ -35,16 +36,12 @@ Drive Structure
 ```
 B_DRIVE/
 ├── configs
-│   ├── bazarr
-│   ├── calibre
-│   ├── calibre-web
-│   ├── heimdall
+│   ├── portainer
+│   ├── jellyfin
+│   ├── nginx
+│   ├── filerun
 │   ├── plex
-│   ├── qbittorrent
-│   ├── radarr
-│   ├── sonarr
-│   └── unifi-controller
-├── downloads
+│   └── deemix
 └── media
     ├── anime
     ├── books
