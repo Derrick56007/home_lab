@@ -12,7 +12,9 @@ services:
       - /mnt/B_DRIVE/configs/jellyfin:/config
       - /mnt/B_DRIVE/media/movies:/data/movies
       - /mnt/B_DRIVE/media/shows:/data/tvshows
-      - /mnt/B_DRIVE/media/music:/data/music
+      - /mnt/B_DRIVE/media/anime:/data/anime
+      - /mnt/B_DRIVE/media/music:/data/music     
+      - /mnt/B_DRIVE/media/reddit_downloader:/data/gs
     ports:
       - 8096:8096
       - 8920:8920 #optional

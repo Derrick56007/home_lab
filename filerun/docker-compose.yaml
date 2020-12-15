@@ -32,3 +32,4 @@ services:
     volumes:
       - /mnt/B_DRIVE/configs/filerun/html:/var/www/html
       - /mnt/B_DRIVE:/user-files
+    restart: unless-stopped
