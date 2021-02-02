@@ -1,7 +1,9 @@
 version: "2.1"
 services:
   plex:
-    image: linuxserver/plex:arm32v7-1.21.0.3616-d87012962-ls1
+          # image: linuxserver/plex:arm32v7-1.21.0.3616-d87012962-ls1
+    
+    image: linuxserver/plex:bionic       
     container_name: plex
     network_mode: host
     environment:

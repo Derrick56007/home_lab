@@ -1,20 +1,21 @@
 version: "2.1"
 services:
   jellyfin:
-    image: ghcr.io/linuxserver/jellyfin
+    image: ghcr.io/linuxserver/jellyfin:bionic
     container_name: jellyfin
     environment:
       - PUID=1000
       - PGID=1000
       - TZ=America/Los_Angeles
-      - UMASK_SET=022 #optional
+      - UMASK=022 #optional
     volumes:
       - /mnt/B_DRIVE/configs/jellyfin:/config
-      - /mnt/B_DRIVE/media/movies:/data/movies
-      - /mnt/B_DRIVE/media/shows:/data/tvshows
-      - /mnt/B_DRIVE/media/anime:/data/anime
-      - /mnt/B_DRIVE/media/music:/data/music     
+        #      - /mnt/B_DRIVE/media/movies:/data/movies
+        #      - /mnt/B_DRIVE/media/shows:/data/tvshows
+        #      - /mnt/B_DRIVE/media/anime:/data/anime
+        #      - /mnt/B_DRIVE/media/music:/data/music     
       - /mnt/B_DRIVE/media/reddit_downloader:/data/gs
+      - /mnt/B_DRIVE/media/gs:/data/gs1
     ports:
       - 8096:8096
       - 8920:8920 #optional

@@ -1,0 +1,16 @@
+version: "2.1"
+services:
+  calibre:
+    build: . 
+    container_name: calibre
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Los_Angeles
+        #   - DOCKER_MODS=linuxserver/calibre-web:calibre
+    volumes:
+      - /mnt/B_DRIVE/configs/calibre:/config
+      - /mnt/B_DRIVE/media/books:/books
+    ports:
+      - 8089:8080
+    restart: unless-stopped

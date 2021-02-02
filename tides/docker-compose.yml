@@ -1,0 +1,8 @@
+version: "2.1"
+services:
+  tides:
+    image: derrick56007/tides
+    container_name: tides
+    ports:
+      - 8005:80
+    restart: unless-stopped
